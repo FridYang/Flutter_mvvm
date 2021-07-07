@@ -2,15 +2,62 @@
 
 A new Flutter application.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+第一步 
 
-A few resources to get you started if this is your first Flutter project:
+runApp(ProviderScope(child: MovieApp()));
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+第二步
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+final darkModeProvider = ChangeNotifierProvider<BackGroundColor>((ref) {
+  return BackGroundColor();
+});
+class BackGroundColor extends ChangeNotifier {
+  bool isDarkModeEnabled = true;
+
+  void setLightMode() {
+    isDarkModeEnabled = false;
+    notifyListeners();
+  }
+  void setDarkMode() {
+    isDarkModeEnabled = true;
+    notifyListeners();
+  }
+}
+
+第三步
+
+@override
+Widget build(BuildContext context) {
+  
+  final backGroundController = useProvider(darkModeProvider);
+  return MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'Moview App with Riverpod Demo',
+    theme: AppTheme.lightTheme,
+    darkTheme: AppTheme.darkTheme,
+    themeMode: backGroundController.isDarkModeEnabled
+        ? ThemeMode.dark
+        : ThemeMode.light,
+    home: HomeView(),
+  );
+}
+
+第四步
+
+class DarkModeSwitcher extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    final darkModeStatusProvider = useProvider(darkModeProvider);
+    return Switch(
+      value: darkModeStatusProvider.isDarkModeEnabled,
+      onChanged: (enabled) {
+        if (enabled) {
+          darkModeStatusProvider.setDarkMode();
+        } else {
+          darkModeStatusProvider.setLightMode();
+        }
+      },
+    );
+  }
+}
