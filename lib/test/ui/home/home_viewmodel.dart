@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kaboshi_flutter_project/test/model/movie.dart';
 
 import '../../config.dart';
-import 'movies_exception_view.dart';
+import 'exception_view.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final Config _environmentConfig;
@@ -23,7 +23,7 @@ class HomeViewModel extends ChangeNotifier {
           .toList(growable: false);
       return movies;
     } on DioError catch (dioError) {
-      throw HomeExceptionView.fromDioError(dioError);
+      throw ExceptionView.fromDioError(dioError);
     }
   }
 }

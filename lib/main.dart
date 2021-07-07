@@ -5,6 +5,7 @@ import 'package:kaboshi_flutter_project/test/movie_app.dart';
 
 void main() {
   runApp(
+    // 第一步
     ProviderScope(
       child: MovieApp(),
     ),

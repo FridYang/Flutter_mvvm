@@ -7,11 +7,12 @@ import 'package:kaboshi_flutter_project/test/component/home_movie_box.dart';
 import 'package:kaboshi_flutter_project/test/provider/movie_future_provider.dart';
 import 'package:kaboshi_flutter_project/test/ui/poster/poster_view.dart';
 
-import 'movies_exception_view.dart';
-
+import 'exception_view.dart';
+ //第二步 继承 HookWidget
 class HomeView extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    //使用Provider
     final viewModelFutureProvider = useProvider(homeViewModelFutureProvider);
     return Padding(
       padding: const EdgeInsets.only(
@@ -29,7 +30,7 @@ class HomeView extends HookWidget {
         ),
         body: viewModelFutureProvider.when(
           error: (e, s) {
-            if (e is HomeExceptionView) {
+            if (e is ExceptionView) {
               return ErrorBody(message: e.message);
             }
             return ErrorBody(
